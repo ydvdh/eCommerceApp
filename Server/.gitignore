@@ -438,3 +438,4 @@ appssettings.json
 *.db
 *.db-shm
 *.db-wal
+/Infrastructure/Data/SeedData
