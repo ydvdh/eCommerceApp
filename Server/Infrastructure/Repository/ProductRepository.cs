@@ -18,12 +18,13 @@ namespace Infrastructure.Repository
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            // For Eager loading navigation property
+            return await _context.Products.Include(p=>p.ProductBrand).Include(p=>p.ProductType).ToListAsync();
         }
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products.Include(p => p.ProductBrand).Include(p => p.ProductType).SingleOrDefaultAsync(p=>p.Id == id);
         }
     }
 }
