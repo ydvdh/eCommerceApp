@@ -439,3 +439,4 @@ appssettings.json
 *.db-shm
 *.db-wal
 /Infrastructure/Data/SeedData
+wwwroot
