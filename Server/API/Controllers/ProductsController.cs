@@ -11,9 +11,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : ApiBaseController
     {
         private readonly IGenericRepository<Product> _productRepo;
         private readonly IGenericRepository<ProductBrand> _productBrandRepo;
@@ -28,8 +26,6 @@ namespace API.Controllers
             _productTypeRepo = productTypeRepo;
             _mapper = mapper;
         }
-
-        public IGenericRepository<Product> ProductRepo { get; }
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
