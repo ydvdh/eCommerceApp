@@ -19,6 +19,15 @@ namespace Infrastructure
             {
                 query = query.Where(specification.Criteria); // Where(p => p.ProductTypeId == id)
             }
+
+            if (specification.OrderBy != null)
+            {
+                query = query.OrderBy(specification.OrderBy); 
+            }
+            if (specification.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(specification.OrderByDescending); 
+            }
             query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
 
             return query;
