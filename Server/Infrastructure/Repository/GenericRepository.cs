@@ -37,6 +37,11 @@ namespace Infrastructure.Repository
         {
             return await ApplySpecification(specification).ToListAsync();
         }
+        public async Task<int> CountAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).CountAsync();
+        }
+
         /*ApplySpecification method here calls the GetQuery method, passing in the 'raw' data retrieved from the dbcontext
          * as an IQueryable of a generic dbset. 
          * _context.Set<T>() (Assume T = Product) is exactly the same as _context.Products 

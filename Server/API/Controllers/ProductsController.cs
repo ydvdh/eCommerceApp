@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.ErrorHandler;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -7,6 +8,7 @@ using Core.Specification;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,11 +32,22 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(string sort, int? brandId, int? typeId)
+        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams productParam)
         {
-            var specification = new ProductsWithTypesAndBrandsSpecification(sort, brandId, typeId);
+            var specification = new ProductsWithTypesAndBrandsSpecification(productParam);
+            var countSpecification = new ProductWithFiltersForCountSpecification(productParam);
+
+            var totalItem = await _productRepo.CountAsync(countSpecification);
             var products = await _productRepo.ListAsync(specification);
-            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+
+            return Ok(new Pagination<ProductToReturnDto>(productParam.PagedIndex, productParam.PageSize, totalItem, data));
+        }
+
+        private object ProductWithFiltersForCountSpecification(ProductSpecParams productParam)
+        {
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
