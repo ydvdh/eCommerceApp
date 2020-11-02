@@ -5,4 +5,4 @@ export interface IPagination {
     pageSize: number;
     count: number;
     data: IProduct[];
-  }
+}
