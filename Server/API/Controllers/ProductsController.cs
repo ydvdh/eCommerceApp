@@ -42,12 +42,7 @@ namespace API.Controllers
 
             var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
 
-            return Ok(new Pagination<ProductToReturnDto>(productParam.PagedIndex, productParam.PageSize, totalItem, data));
-        }
-
-        private object ProductWithFiltersForCountSpecification(ProductSpecParams productParam)
-        {
-            throw new NotImplementedException();
+            return Ok(new Pagination<ProductToReturnDto>(productParam.PageIndex, productParam.PageSize, totalItem, data));
         }
 
         [HttpGet("{id}")]
