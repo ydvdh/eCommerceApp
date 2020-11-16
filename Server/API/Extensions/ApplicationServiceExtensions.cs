@@ -1,6 +1,7 @@
 ﻿using API.ErrorHandler;
 using Core.Interfaces;
 using Infrastructure.Repository;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace API.Extensions
                     return new BadRequestObjectResult(errorResponse);
                 };
             });
-
+            services.AddScoped<ITokenService, TokenService>();
             return services;
         }
     }
