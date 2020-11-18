@@ -6,6 +6,7 @@ import { PagingHeaderComponent } from './components/paging-header/paging-header.
 import { PagerComponent } from './components/pager/pager.component';
 import { OrderTotalsComponent } from './components/order-totals/order-totals.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [PagingHeaderComponent, PagerComponent, OrderTotalsComponent],
@@ -13,8 +14,17 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     PaginationModule.forRoot(),
     CarouselModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDropdownModule.forRoot()
   ],
-  exports: [PaginationModule, PagingHeaderComponent, PagerComponent, CarouselModule, OrderTotalsComponent, ReactiveFormsModule]
+  exports: [
+    PaginationModule,
+    PagingHeaderComponent,
+    PagerComponent,
+    CarouselModule,
+    OrderTotalsComponent,
+    ReactiveFormsModule,
+    BsDropdownModule
+  ]
 })
 export class SharedModule { }
