@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AccountService } from './../account.service';
 
 @Component({
@@ -10,10 +10,12 @@ import { AccountService } from './../account.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  retunUrl: string;
 
-  constructor(private accountService: AccountService, private router: Router) { }
+  constructor(private accountService: AccountService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.retunUrl = this.activatedRoute.snapshot.queryParams.retunUrl || '/shop';
     this.createLoginForm();
   }
 
