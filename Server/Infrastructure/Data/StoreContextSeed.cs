@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Linq;
+using Core.Entities.OrderAggregate;
 
 namespace Infrastructure.Data
 {
@@ -48,6 +49,17 @@ namespace Infrastructure.Data
                     foreach (var product in products)
                     {
                         storeContext.Products.Add(product);
+                    }
+                    await storeContext.SaveChangesAsync();
+                }
+                if (!storeContext.DeliveryMethods.Any())
+                {
+                    var dmData = File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
+                    var items = JsonSerializer.Deserialize<List<DeliveryMethod>>(dmData);
+
+                    foreach (var item in items)
+                    {
+                        storeContext.DeliveryMethods.Add(item);
                     }
                     await storeContext.SaveChangesAsync();
                 }
