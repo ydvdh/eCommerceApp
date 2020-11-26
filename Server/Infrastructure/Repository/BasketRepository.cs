@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
+    //redis-server
     public class BasketRepository : IBasketRepository
     {
         private readonly IDatabase _database;
