@@ -1,5 +1,6 @@
 ﻿using API.ErrorHandler;
 using Core.Interfaces;
+using Infrastructure.Data;
 using Infrastructure.Repository;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,7 @@ namespace API.Extensions
             });
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }
