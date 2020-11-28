@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Repository;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace Infrastructure.Data
 
             if(!_repositories.ContainsKey(type))
             {
-                var repositoryType = typeof(IGenericRepository<>);
+                var repositoryType = typeof(GenericRepository<>);
                 var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _storeContext);
 
                 _repositories.Add(type, repositoryInstance);
