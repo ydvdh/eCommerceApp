@@ -440,3 +440,4 @@ appssettings.json
 *.db-wal
 /Infrastructure/Data/SeedData
 wwwroot
+AppSecretSetting.json
