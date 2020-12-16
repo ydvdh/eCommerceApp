@@ -22,6 +22,8 @@ namespace Core.Entities
         public string ClientSecret { get; set; }
 
         public string PaymentIntentId { get; set; }
+
+        public decimal ShippingPrice { get; set; }
     }
 
     public class BasketItem
