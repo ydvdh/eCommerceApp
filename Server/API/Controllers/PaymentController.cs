@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using API.ErrorHandler;
+using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,12 @@ namespace API.Controllers
         [HttpPost("{basketId}")]
         public async Task<ActionResult<CustomerBasket>> CreateorUpdatePaymentIntent(string basketId)
         {
-            return await _paymentService.CreateorUpdatePaymentIntent(basketId);
+            var basket = await _paymentService.CreateorUpdatePaymentIntent(basketId);
+
+            if (basket == null) return BadRequest(new ApiResponse(400, "Problem in creating basket"));
+
+            return basket;
+
         }
     }
 }
