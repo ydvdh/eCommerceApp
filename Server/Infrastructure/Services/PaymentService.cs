@@ -1,12 +1,14 @@
 ﻿using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Core.Interfaces;
+using Core.Specification;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Product = Core.Entities.Product;
+using Order = Core.Entities.OrderAggregate.Order;
 
 namespace Infrastructure.Services
 {
@@ -71,6 +73,32 @@ namespace Infrastructure.Services
             await _basketRepo.CreateOrUpdateCustomerBasketAsync(basket);
             return basket;
         }
-    }
 
+        public async Task<Order> UpdateOrderPaymentSucceeded(string paymentIntentId)
+        {
+            var spec = new OrderByPaymentIntentIdWithItemsSpecification(paymentIntentId);
+            var order = await _unitOfWork.Repository<Order>().GetEntityWithSpecification(spec);
+
+            if(order == null) return null;
+
+            order.Status = OrderStatus.PaymentRecevied;
+            _unitOfWork.Repository<Order>().Update(order);
+
+            await _unitOfWork.Complete();
+            return order;
+        }
+
+        public async Task<Order> UpdateOrderPaymentFailed(string paymentIntentId)
+        {
+            var spec = new OrderByPaymentIntentIdWithItemsSpecification(paymentIntentId);
+            var order = await _unitOfWork.Repository<Order>().GetEntityWithSpecification(spec);
+
+            if (order == null) return null;
+
+            order.Status = OrderStatus.PaymentFailed;
+
+            await _unitOfWork.Complete();
+            return order;
+        }       
+    }
 }
