@@ -441,3 +441,5 @@ appssettings.json
 /Infrastructure/Data/SeedData
 wwwroot
 AppSecretSetting.json
+publish
+Content
